@@ -1,0 +1,5 @@
+# Default owners and will be assumed to be the owners
+# for code unless a later rule specifies otherwise.
+# Order matters as the last matching rule is what is
+# applied.
+* @putnam120
