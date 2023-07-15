@@ -6,6 +6,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/putnam120/postgRegent/database"
 	"github.com/putnam120/postgRegent/database/rbac"
+	"github.com/putnam120/postgRegent/oracles"
 )
 
 type PostgresRegent struct {
@@ -15,6 +16,7 @@ type PostgresRegent struct {
 	Password string
 	Dbname   string
 	connPool *pgxpool.Pool
+	Oracle   oracles.Oracle
 }
 
 func (r *PostgresRegent) Init() error {

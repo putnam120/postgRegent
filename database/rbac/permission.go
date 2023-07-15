@@ -16,11 +16,11 @@ type actions struct {
 }
 
 type Permission struct {
-	Name     string
-	Database string
-	Schemas  []string
-	Actions  []Action
-	Tables   []string
+	Name     string   `json:"name"`
+	Database string   `json:"database"`
+	Schemas  []string `json:"schemas"`
+	Actions  []Action `json:"actions"`
+	Tables   []string `json:"tables"`
 }
 
 var Actions = actions{

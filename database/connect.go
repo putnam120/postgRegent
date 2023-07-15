@@ -40,7 +40,7 @@ func Connect(host string, port int, user string, password string, dbname string)
 			_ = fmt.Errorf("Unable to connect to database: %w", err)
 			connError = err
 		} else {
-			fmt.Println("Successfully connected to database ", dbname, " in ", host)
+			fmt.Println("Successfully created a connection pool to database", dbname, "in", host)
 			connPoolMap[connectionId] = pool
 		}
 	})
