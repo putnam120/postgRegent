@@ -9,9 +9,9 @@ import (
 )
 
 type Role struct {
-	Name        string
-	Database    string
-	Permissions []string
+	Name        string   `json:"name"`
+	Database    string   `json:"database"`
+	Permissions []string `json:"permissions"`
 }
 
 func DisablePublic(pool *pgxpool.Pool, dbname string) error {

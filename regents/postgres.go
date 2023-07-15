@@ -6,6 +6,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/putnam120/postgRegent/database"
 	"github.com/putnam120/postgRegent/database/rbac"
+	"github.com/putnam120/postgRegent/oracles"
 )
 
 type PostgresRegent struct {
@@ -14,6 +15,7 @@ type PostgresRegent struct {
 	User     string
 	Password string
 	Dbname   string
+	Oracle   oracles.Oracle
 	connPool *pgxpool.Pool
 }
 

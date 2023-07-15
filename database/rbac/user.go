@@ -9,9 +9,9 @@ import (
 )
 
 type User struct {
-	Name     string
-	Password string
-	Roles    []string
+	Name     string   `json:"name"`
+	Password string   `json:"-"` // Field is not marshalled to JSON.
+	Roles    []string `json:"roles"`
 }
 
 func CreateUser(pool *pgxpool.Pool, user *User) error {
