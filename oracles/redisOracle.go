@@ -11,23 +11,25 @@ import (
 )
 
 type redisOracle struct {
-	host     string
-	port     int
-	username string
-	password string
-	connPool *redis.Pool
-	searcher *redisearch.Client
+	host        string
+	port        int
+	username    string
+	password    string
+	initialized bool
+	connPool    *redis.Pool
+	searcher    *redisearch.Client
 }
 
-func GetRedisOracle(host string, port int, username string, password string) (*redisOracle, error) {
+func GetRedisOracle(host string, port int, username string, password string) *redisOracle {
 	oracle := &redisOracle{host: host, port: port, username: username, password: password}
-	if err := oracle.Init(); err != nil {
-		return nil, err
-	}
-	return oracle, nil
+	oracle.initialized = false
+	return oracle
 }
 
 func (ro *redisOracle) Init() error {
+	if ro.initialized {
+		return nil
+	}
 	// Connect to Redis instance.
 	hostPath := fmt.Sprintf("%s:%d", ro.host, ro.port)
 	// Create connection pool to Redis.
@@ -58,6 +60,7 @@ func (ro *redisOracle) Init() error {
 		}
 	}
 	ro.searcher = rsearch
+	ro.initialized = true
 	fmt.Println("Successfully initialized RedisOracle.")
 	return nil
 }

@@ -15,8 +15,8 @@ type PostgresRegent struct {
 	User     string
 	Password string
 	Dbname   string
-	connPool *pgxpool.Pool
 	Oracle   oracles.Oracle
+	connPool *pgxpool.Pool
 }
 
 func (r *PostgresRegent) Init() error {
