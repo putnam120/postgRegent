@@ -23,7 +23,7 @@ func (r *PostgresRegent) Init() error {
 	if err := r.connect(); err != nil {
 		return err
 	}
-	if err := rbac.DisablePublic(r.connPool, r.Dbname); err != nil {
+	if err := rbac.DisablePublic(r.connPool); err != nil {
 		return err
 	}
 
