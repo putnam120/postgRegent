@@ -71,6 +71,7 @@ func (ro *redisOracle) searchForName(prefix string, name string) bool {
 	_, num, err := ro.searcher.Search(redisearch.NewQuery(query))
 	if err != nil {
 		fmt.Println("Error while searching for ", prefix, "(", name, "): ", err)
+		return false
 	}
 	return num > 0
 }

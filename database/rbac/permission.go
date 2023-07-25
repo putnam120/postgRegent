@@ -13,6 +13,7 @@ type Action string
 
 type actions struct {
 	CONNECT Action
+	READ    Action
 }
 
 type Permission struct {
@@ -25,6 +26,7 @@ type Permission struct {
 
 var Actions = actions{
 	CONNECT: "CONNECT",
+	READ:    "READ",
 }
 
 func CreatePermission(pool *pgxpool.Pool, permission *Permission) error {
@@ -39,6 +41,22 @@ func CreatePermission(pool *pgxpool.Pool, permission *Permission) error {
 			fmt.Sprintf(
 				"GRANT CONNECT ON DATABASE %s TO permission_%s;",
 				permission.Database, permission.Name,
+			),
+		)
+	}
+
+	// Add ability to read data in the given (database, schema, table) tuples.
+	if actionsSet.Contains(Actions.READ) {
+		fmt.Println("Aciton set contains READ")
+		queries = append(queries,
+			fmt.Sprintf("GRANT SELECT ON %s IN SCHEMA %s TO %s;",
+				strings.Join(permission.Tables[:], ","),
+				strings.Join(permission.Schemas[:], ","),
+				permission.Name,
+			),
+			fmt.Sprintf("GRANT USAGE ON SCHEMA %s TO %s;",
+				strings.Join(permission.Schemas[:], ","),
+				permission.Name,
 			),
 		)
 	}

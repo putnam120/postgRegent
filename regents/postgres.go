@@ -44,3 +44,21 @@ func (r *PostgresRegent) connect() error {
 	r.connPool = conn
 	return nil
 }
+
+// Add a new permission to the database.
+//
+// When attempting to add a permission, an attempt is first made to add it to
+// the oracle. If this succeeds we then proceed to add it to the database.
+func (r *PostgresRegent) CreatePermission(permission rbac.Permission) error {
+	err := r.Oracle.OfferPermission(&permission)
+	if err != nil {
+		fmt.Printf("Unable to add permission: %v to the oracle.", permission)
+		return err
+	}
+	err = rbac.CreatePermission(r.connPool, &permission)
+	if err != nil {
+		fmt.Printf("Unable to add permission: %v to the database.", permission)
+		return err
+	}
+	return nil
+}
