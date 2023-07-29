@@ -47,12 +47,12 @@ func CreatePermission(pool *pgxpool.Pool, permission *Permission) error {
 	case Actions.READ:
 		fmt.Println("READ permission")
 		queries = append(queries,
-			fmt.Sprintf("GRANT SELECT ON %s IN SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT SELECT ON %s IN SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Tables[:], ","),
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
-			fmt.Sprintf("GRANT USAGE ON SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT USAGE ON SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
@@ -61,12 +61,12 @@ func CreatePermission(pool *pgxpool.Pool, permission *Permission) error {
 		// Add ability to edit (but not delete) data in the given (database, schema, table) tubles.
 		fmt.Println("EDIT permission")
 		queries = append(queries,
-			fmt.Sprintf("GRANT SELECT,INSERT,UPDATE ON %s IN SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT SELECT,INSERT,UPDATE ON %s IN SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Tables[:], ","),
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
-			fmt.Sprintf("GRANT USAGE ON SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT USAGE ON SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
@@ -75,12 +75,12 @@ func CreatePermission(pool *pgxpool.Pool, permission *Permission) error {
 		// Same abilities as EDIT but is also able to delete data.
 		fmt.Println("ADMIN permission")
 		queries = append(queries,
-			fmt.Sprintf("GRANT ALL ON %s IN SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT ALL ON %s IN SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Tables[:], ","),
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
-			fmt.Sprintf("GRANT ALL ON SCHEMA %s TO %s;",
+			fmt.Sprintf("GRANT ALL ON SCHEMA %s TO permission_%s;",
 				strings.Join(permission.Schemas[:], ","),
 				permission.Name,
 			),
