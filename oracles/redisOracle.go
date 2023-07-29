@@ -116,6 +116,13 @@ func (ro *redisOracle) UsersWithRole(name string) ([]string, error) {
 // the data is added to the Redis databse. Any errors that are encountered
 // are returned.
 func (ro *redisOracle) OfferPermission(permission *rbac.Permission) error {
+	if !ro.initialized {
+		err := ro.Init()
+		if err != nil {
+			return err
+		}
+	}
+
 	updatedPermission := *permission
 	updatedPermission.Name = "permission_" + permission.Name
 	if ro.PermissionExists(permission.Name) {
