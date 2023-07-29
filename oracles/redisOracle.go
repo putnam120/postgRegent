@@ -71,6 +71,7 @@ func (ro *redisOracle) searchForName(prefix string, name string) bool {
 	_, num, err := ro.searcher.Search(redisearch.NewQuery(query))
 	if err != nil {
 		fmt.Println("Error while searching for ", prefix, "(", name, "): ", err)
+		return false
 	}
 	return num > 0
 }
@@ -115,6 +116,13 @@ func (ro *redisOracle) UsersWithRole(name string) ([]string, error) {
 // the data is added to the Redis databse. Any errors that are encountered
 // are returned.
 func (ro *redisOracle) OfferPermission(permission *rbac.Permission) error {
+	if !ro.initialized {
+		err := ro.Init()
+		if err != nil {
+			return err
+		}
+	}
+
 	updatedPermission := *permission
 	updatedPermission.Name = "permission_" + permission.Name
 	if ro.PermissionExists(permission.Name) {
