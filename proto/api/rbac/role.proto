@@ -1,0 +1,17 @@
+syntax "proto3";
+
+package rbac;
+
+option go_package = "github.com/putnam120/postgRegent;rbac";
+
+import "proto/api/status.proto"
+
+message Role {
+  string name = 1;
+  optional string database = 2;
+  repeated Permission permissions = 3;
+}
+
+service RoleService {
+  rpc Create(Role) returns (status.Status);
+}
