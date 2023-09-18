@@ -2,9 +2,7 @@ syntax = "proto3";
 
 package rbac;
 
-option go_package = "github.com/putnam120/postgRegent;rbac";
-
-import "proto/api/status.proto"
+option go_package = "github.com/putnam120/postgRegent/proto/api/rbac";
 
 enum Action {
   UNKNOWN = 0;
@@ -20,8 +18,4 @@ message Permission {
   repeated string schemas = 3;
   repeated string tables = 4;
   optional Action action = 5;
-}
-
-service PermissionService {
-  rpc Create(Permission) returns (status.Status);
 }

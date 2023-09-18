@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package postgregent;
+
+option go_package = "github.com/putnam120/postRegent/proto/api/postgregent";
+
+import "proto/api/postgregent/status.proto";
+import "proto/api/rbac/permission.proto";
+import "proto/api/rbac/role.proto";
+import "proto/api/rbac/user.proto";
+
+service PostgRegentService {
+  rpc CreatePermission(rbac.Permission) returns (Status);
+
+  rpc CreateRole(rbac.Role) returns (Status);
+
+  rpc CreateUSer(rbac.User) returns (Status);
+}

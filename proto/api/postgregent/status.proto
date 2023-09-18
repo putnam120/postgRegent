@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package postgregent;
+
+option go_package = "github.com/putnam120/postgRegent/proto/api/postgregent";
+
+message Status {
+  bool Ok = 1;
+  optional string Error = 2;
+}

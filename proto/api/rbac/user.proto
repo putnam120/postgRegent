@@ -4,10 +4,10 @@ package rbac;
 
 option go_package = "github.com/putnam120/postgRegent/proto/api/rbac";
 
-import "proto/api/rbac/permission.proto";
+import "proto/api/rbac/role.proto";
 
-message Role {
+message User {
   string name = 1;
-  optional string database = 2;
-  repeated Permission permissions = 3;
+  string password = 2;
+  repeated Role roles = 3;
 }
