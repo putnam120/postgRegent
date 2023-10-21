@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rbac;
+
+option go_package = "github.com/putnam120/postgRegent/proto/api/rbac";
+
+import "proto/api/rbac/role.proto";
+
+message User {
+  string name = 1;
+  string password = 2;
+  repeated Role roles = 3;
+}

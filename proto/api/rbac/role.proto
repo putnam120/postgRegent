@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rbac;
+
+option go_package = "github.com/putnam120/postgRegent/proto/api/rbac";
+
+import "proto/api/rbac/permission.proto";
+
+message Role {
+  string name = 1;
+  optional string database = 2;
+  repeated Permission permissions = 3;
+}
